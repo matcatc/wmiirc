@@ -64,6 +64,15 @@ Action halt
 !
 }
 
+# Tagging Rules
+wmiir write /tagrules <<!
+/MPlayer|VLC/   -> ~
+/Wicd*/         -> wireless
+/Firefox/       -> sel+browser
+/SpiderOak.*/   -> backup
+/claws-mail.*/  -> mail
+!
+
 
 
 # Autostart some programs
@@ -74,7 +83,9 @@ autostart() {
 # The sleeps are to ensure that they don't start to early
 # prevents weird glitches with them starting before everything ready
 # note that autostart doesn't work with chained commands
-#autostart nm-applet                                             # internet
+# started on its own
+#bash -c "sleep 4 ; wicd-client -n" &                           # internet
+
 bash -c "sleep 4 ; ~/.wmii/scripts/set_background.sh" &         # desktop background
 bash -c "sleep 4 ; ~/.wmii/scripts/check_mail.sh" &
 bash -c "sleep 4 ; conky -c ~/.conky/wmii_conkyrc" &
