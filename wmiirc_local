@@ -1,0 +1,66 @@
+MODKEY=Mod1
+
+WMII_NORMCOLORS='#888888 #222222 #333333'
+WMII_FOCUSCOLORS='#ffffff #285577 #4c7899'
+WMII_BACKGROUND='#333333'
+
+WMII_FONT='fixed'
+
+WMII_TERM="urxvt -cd ~"
+
+# statusbar info
+status() {
+	echo -n $(date)
+}
+
+
+# local events and key bindings
+local_events() {
+    cat <<'!'
+
+Key XF86AudioRaiseVolume
+        ~/.wmii/scripts/raise_volume.sh
+        ~/.wmii/scripts/volume_status.py
+Key XF86AudioLowerVolume
+        ~/.wmii/scripts/lower_volume.sh
+        ~/.wmii/scripts/volume_status.py
+Key XF86AudioMute
+        ~/.wmii/scripts/mute_volume.sh
+        ~/.wmii/scripts/volume_status.py
+Key Mod4-L
+        ~/.wmii/scripts/lock_screen.sh
+Key $MODKEY-Shift-u
+        notify-send "keybinding test: alt-shift-u"
+
+Key $MODKEY-Shift-m
+        exec ~/.wmii/scripts/view.py next &
+Key $MODKEY-Shift-n
+        exec ~/.wmii/scripts/view.py prev &
+
+
+Action halt
+    sudo shutdown -h now
+
+#Action test
+#    wmiir create /rbar/test
+#    echo 'test' | wmiir write /rbar/test
+
+!
+}
+
+
+
+# Autostart some programs
+autostart() {
+    exec $@ &
+}
+
+# The sleeps are to ensure that they don't start to early
+# prevents weird glitches with them starting before everything ready
+# note that autostart doesn't work with chained commands
+#autostart nm-applet                                             # internet
+bash -c "sleep 4 ; ~/.wmii/scripts/set_background.sh" &         # desktop background
+bash -c "sleep 4 ; ~/.wmii/scripts/check_mail.sh" &
+bash -c "sleep 4 ; conky -c ~/.conky/wmii_conkyrc" &
+bash -c "sleep 4 ; ~/.wmii/scripts/volume_status.py" &          # add the volume info on startup
+
