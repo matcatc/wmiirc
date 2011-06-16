@@ -1,0 +1,57 @@
+This project is simply my configuration for wmii.
+
+The project consists of wmiirc_local, the editing of the wmii config, and a
+bunch of scripts. The scripts in many cases are quickly thrown together and
+aren't a paragon of software development, so take what they do with a grain of
+salt.
+
+The biggest problem I had with getting started with wmii was the lack of good
+documentation and examples. Hopefully by making this available, it'll be a
+little easier for others to get started with wmii.
+
+Requirements
+------------
+
+wmii > 3.9.2
+    This is what I used, but I expect that more recent version will work for
+    the most part.
+python 3.x
+    Most/all of the python scripts are unlikely to use anything that can't be
+    found in 2.x, so it should be easy enough to translate to 2.x
+bash
+    For the shell scripts. Could likely be easily translated to other shells.
+
+
+Installation
+------------
+
+Simply untar/clone the project to ~/.wmii or ~/.wmii-<version>, whichever is
+more appropriate for the version of wmii you're going to be using. I have mine
+in ~/.wmii.
+
+
+Download
+--------
+
+This project can be found here: https://github.com/matcatc/wmiirc
+
+
+Licensing
+---------
+
+The project is licensed under GNU GPL v.3.
+
+If I haven't added the official licensing information and you want to
+download/modify/etc. please let me know so I can add it.
+
+
+Contact info
+------------
+
+I can be contacted through the github project
+(https://github.com/matcatc/wmiirc) and through email (matcatprg@yahoo.com).
+
+
+
+Matthew Todd
+
