@@ -4,6 +4,9 @@ Select the next/previous view.
 
 If input is "next", go to next; if input is "previous", go to previous.
 
+@note
+TODO: add logging?
+
 @license
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,11 +29,47 @@ import sys
 import subprocess
 
 
+#
+## Custom Exceptions
+#
+
+class CustException (Exception):
+    '''
+    Custom exception
+
+    @date Jun 17, 2011
+    @author Matthew Todd
+    '''
+    def __init__(self, description, exception):
+        '''
+        @param description String describing what went wrong.
+        @param exception Exception the exception that was thrown and caught.
+        @date Jun 17, 2011
+        @author Matthew Todd
+        '''
+        self.description = description
+        self.exception = exception
+
+    def __repr__(self):
+        '''
+        '''
+        return "%s(description=%r, exception=%r)" % (self.__class__, self.description, self.exception)
+
+    def __str__(self):
+        '''
+        '''
+        return "Exception: %s\n%s" % (self.description, self.exception)
+
+#
+## Function Definitions
+#
+
 def usage():
     print("usage: ", sys.argv[0], " <next/previous>")
 
 def get_tags():
     '''
+    @throws CustException
     @return a list of the tags currently in use, in the order the appear naturally (alphabetical)
     @date Jun 13, 2011
     @author Matthew Todd
@@ -38,8 +77,7 @@ def get_tags():
     try:
         ret = subprocess.check_output(['wmiir', 'ls', '/tag/'])
     except (subprocess.CalledProcessError, OSError) as e:
-        # TODO: handle
-        raise
+        raise CustException("Failed 'wmiir ls /tag/'", e)
 
     tags = [x.rstrip('/ ') for x in ret.decode().split('\n') if x != '']
     tags.remove('sel')
@@ -49,6 +87,7 @@ def get_tags():
 
 def get_current_tag():
     '''
+    @throws CustException
     @return the currently selected tag
     @date Jun 13, 2011
     @author Matthew Todd
@@ -56,8 +95,7 @@ def get_current_tag():
     try:
         ret = subprocess.check_output(['wmiir', 'read', '/tag/sel/ctl'])
     except (subprocess.CalledProcessError, OSError) as e:
-        # TODO: handle
-        raise
+        raise CustException("Failed 'wmiir read /tag/sel/ctl'", e)
 
     return ret.decode().split('\n')[0]
 
@@ -66,17 +104,14 @@ def view_tag(tag):
     '''
     sets the current tag to be the given one
 
-    @throws TODO
+    @throws CustException
     @date Jun 13, 2011
     @author Matthew Todd
     '''
-    print("DEBUG: switching to tag: ", tag)
-
     try:
         subprocess.check_call(['wmiir', 'xwrite',  '/ctl', 'view', tag])
     except (subprocess.CalledProcessError, OSError) as e:
-        # TODO: handle
-        raise
+        raise CustException("Failed 'wmiir xwrite /ctl view %s" % tag, e)
 
 
 def main():
@@ -105,3 +140,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
