@@ -22,19 +22,25 @@ assumes only one output (sink) line
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+@note
+TODO: add logging?
+
 @date Jun 14, 2011
 @author Matthew Todd
 '''
 import subprocess
 
-MAX_VOL = 0x10000
-NUM_SEGMENTS = 10
+MAX_ACHIEVABLE_VOL = 0x10000            # physical max
+MAX_VOL = MAX_ACHIEVABLE_VOL            # max that user cares about
+NUM_SEGMENTS = 12
+SEGMENT_WIDTH = 4000                    # set to desired segment width. None means that it is computed from MAX_VOL and NUM_SGEMENTS
+                                        # user would want to set to increment size from raise/lower_volume.sh
 
 def get_data():
     try:
         ret = subprocess.check_output(['pacmd', 'dump'])
     except (subprocess.CalledProcessError, OSError) as e:
-        # TODO: handle
+        # TODO: handle exception
         raise
 
     for line in ret.decode().split('\n'):
@@ -54,8 +60,6 @@ def get_volume(volume_line):
     '''
     vol = volume_line.split(' ')[-1]
     
-    print("DEBUG: vol = %s" % vol)
-
     return int(vol, 16)
 
 def get_mute(mute_line):
@@ -67,12 +71,13 @@ def get_mute(mute_line):
     '''
     mute = mute_line.split(' ')[-1]
 
-    print("DEBUG: mute = %s" % mute)
-
     return mute == "yes"
 
 def generate_output(vol, is_mute):
     '''
+    If user has provided a custom SEGMENT_WIDTH, then it is used. Else it is
+    computed from other predefined information.
+
     @param Number vol volume level
     @param Bool is_mute True if output muted
     @return String the output to be printed
@@ -82,10 +87,12 @@ def generate_output(vol, is_mute):
     if is_mute:
         return "Vol: muted"
     else:
-        segment_width = MAX_VOL / NUM_SEGMENTS
-        num_on = min(int(vol / segment_width), NUM_SEGMENTS)
+        if SEGMENT_WIDTH != None:
+            segment_width = SEGMENT_WIDTH
+        else:
+            segment_width = MAX_VOL / NUM_SEGMENTS
 
-        print("DEBUG: vol = %d, segment_width = %f, num_on = %d\n" %(vol, segment_width, num_on))
+        num_on = min(int(vol / segment_width), NUM_SEGMENTS)
 
         return "Vol: [" + "-"*num_on + " "*(NUM_SEGMENTS-num_on) + "]"
 
@@ -102,7 +109,7 @@ def print_output(output):
         p = subprocess.Popen('echo "%s" | wmiir create /rbar/vol' % output, shell=True)
         p.wait()
     except (subprocess.CalledProcessError, OSError) as e:
-        # TODO: handle
+        # TODO: handle exception
         raise
 
 
@@ -119,13 +126,6 @@ def main():
     output = generate_output(vol, is_mute)
 
     print_output(output)
-    
-    # TODO: delete when done debugging
-#    try:
-#        subprocess.check_call(['notify-send', output])
-#    except (subprocess.CalledProcessError, OSError) as e:
-#        raise
-
 
 if __name__ == '__main__':
     main()
