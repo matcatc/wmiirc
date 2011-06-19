@@ -36,12 +36,46 @@ NUM_SEGMENTS = 12
 SEGMENT_WIDTH = 4000                    # set to desired segment width. None means that it is computed from MAX_VOL and NUM_SGEMENTS
                                         # user would want to set to increment size from raise/lower_volume.sh
 
+
+#
+## Exception defs
+#
+class CustException (Exception):
+    '''
+    Custom exception
+
+    @date Jun 17, 2011
+    @author Matthew Todd
+    '''
+    def __init__(self, description, exception):
+        '''
+        @param description String describing what went wrong.
+        @param exception Exception the exception that was thrown and caught.
+        @date Jun 17, 2011
+        @author Matthew Todd
+        '''
+        self.description = description
+        self.exception = exception
+
+    def __repr__(self):
+        '''
+        '''
+        return "%s(description=%r, exception=%r)" % (self.__class__, self.description, self.exception)
+
+    def __str__(self):
+        '''
+        '''
+        return "Exception: %s\n%s" % (self.description, self.exception)
+
+#
+## Function defs
+#
+
 def get_data():
     try:
         ret = subprocess.check_output(['pacmd', 'dump'])
     except (subprocess.CalledProcessError, OSError) as e:
-        # TODO: handle exception
-        raise
+        raise CustException('pacmd failed', e)
 
     for line in ret.decode().split('\n'):
         if line.startswith('set-sink-volume'):
@@ -109,8 +143,7 @@ def print_output(output):
         p = subprocess.Popen('echo "%s" | wmiir create /rbar/vol' % output, shell=True)
         p.wait()
     except (subprocess.CalledProcessError, OSError) as e:
-        # TODO: handle exception
-        raise
+        raise CustException('wmiir create ... failed', e)
 
 
 def main():
