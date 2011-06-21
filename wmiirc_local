@@ -90,4 +90,5 @@ bash -c "sleep 4 ; ~/.wmii/scripts/set_background.sh" &         # desktop backgr
 bash -c "sleep 4 ; ~/.wmii/scripts/check_mail.sh" &
 bash -c "sleep 4 ; conky -c ~/.conky/wmii_conkyrc" &
 bash -c "sleep 4 ; ~/.wmii/scripts/volume_status.py" &          # add the volume info on startup
+bash -c "sleep 4 ; ~/.wmii/scripts/caps_status.py" &
 
