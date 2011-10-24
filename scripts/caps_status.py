@@ -116,7 +116,7 @@ def main():
         output = genOutput(isCapsOn())
         if previous != output:
             printOutput(output)
-            notify(output)
+#            notify(output)
 
         previous = output
         time.sleep(POLL_PERIOD)

@@ -18,4 +18,4 @@
 
 # requires that the user change the path to a valid image on his/her system
 
-feh --bg-fill /media/Storage/Pictures/Wallpapers/fractals/NewtBasin1/c/NewtBasin1-c1.png
+feh --bg-fill ~/wallpaper.png

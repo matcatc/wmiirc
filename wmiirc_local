@@ -22,7 +22,7 @@ WMII_BACKGROUND='#333333'
 
 WMII_FONT='fixed'
 
-WMII_TERM="urxvt -cd ~"
+WMII_TERM="urxvt"
 
 # statusbar info
 status() {
@@ -30,10 +30,23 @@ status() {
 }
 
 
+
+
+
 # local events and key bindings
 local_events() {
     cat <<'!'
 
+# add mapping for if the enter key hasn't been remapped
+# copied line from /etc/X11/wmii/wmiirc
+#Key $MODKEY-KP_Enter
+#	notify-send "KP_Enter"
+#	eval wmiir setsid $WMII_TERM &
+#Key $MODKEY-o
+#	notify-send "modkey-o"
+#	eval wmiir setsid $WMII_TERM &
+#
+KeyGroup Sound
 Key XF86AudioRaiseVolume
         ~/.wmii/scripts/raise_volume.sh
         ~/.wmii/scripts/volume_status.py
@@ -43,19 +56,34 @@ Key XF86AudioLowerVolume
 Key XF86AudioMute
         ~/.wmii/scripts/mute_volume.sh
         ~/.wmii/scripts/volume_status.py
+
+KeyGroup Lock screen
 Key Mod4-L
         ~/.wmii/scripts/lock_screen.sh
+
+KeyGroup Test
 Key $MODKEY-Shift-u
         notify-send "keybinding test: alt-shift-u"
 
+KeyGroup Moving around
 Key $MODKEY-Shift-m
         exec ~/.wmii/scripts/view.py next &
 Key $MODKEY-Shift-n
         exec ~/.wmii/scripts/view.py prev &
 
+KeyGroup Touchpad
+# think i for input
+Key $MODKEY-i
+        PAD=`exec ~/bin/touchpad.py toggle &`
+        echo -n "pad: ${PAD}" | wmiir create rbar/touchpad
 
+# following 3 commands require that the current user can run them w/o passwords (via /etc/sudoers) to work correctly.
 Action halt
-    sudo shutdown -h now
+        sudo halt
+Action poweroff
+        sudo poweroff
+Action reboot
+        sudo reboot
 
 #Action test
 #    wmiir create /rbar/test
@@ -69,8 +97,11 @@ wmiir write /tagrules <<!
 /MPlayer|VLC/   -> ~
 /Wicd*/         -> wireless
 /Firefox/       -> sel+browser
+/Iceweasel/     -> sel+browser
 /SpiderOak.*/   -> backup
 /claws-mail.*/  -> mail
+/gnucash.*/	-> finance
+/Pidgin.*/      -> ~+im
 !
 
 
@@ -88,7 +119,12 @@ autostart() {
 
 bash -c "sleep 4 ; ~/.wmii/scripts/set_background.sh" &         # desktop background
 bash -c "sleep 4 ; ~/.wmii/scripts/check_mail.sh" &
-bash -c "sleep 4 ; conky -c ~/.conky/wmii_conkyrc" &
+bash -c "sleep 4 ; ~/.conky/conky_start.sh" &
 bash -c "sleep 4 ; ~/.wmii/scripts/volume_status.py" &          # add the volume info on startup
-bash -c "sleep 4 ; ~/.wmii/scripts/caps_status.py" &
+
+# The new computer's caps indicator works, so no more need for this
+#bash -c "sleep 4 ; ~/.wmii/scripts/caps_status.py" &
+
+
+bash -c "xmodmap ~/.Xmodmap"				# fix the Enter key on the keyboard
 
