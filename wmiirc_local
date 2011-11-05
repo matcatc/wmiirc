@@ -100,7 +100,7 @@ wmiir write /tagrules <<!
 /Iceweasel/     -> sel+browser
 /SpiderOak.*/   -> backup
 /claws-mail.*/  -> mail
-/gnucash.*/	-> finance
+/gnucash.*/	    -> finance
 /Pidgin.*/      -> ~+im
 !
 
@@ -115,16 +115,18 @@ autostart() {
 # prevents weird glitches with them starting before everything ready
 # note that autostart doesn't work with chained commands
 # started on its own
-#bash -c "sleep 4 ; wicd-client -n" &                           # internet
-
 bash -c "sleep 4 ; ~/.wmii/scripts/set_background.sh" &         # desktop background
-bash -c "sleep 4 ; ~/.wmii/scripts/check_mail.sh" &
+bash -c "sleep 4 ; ~/.wmii/scripts/check_mail.sh" &             
 bash -c "sleep 4 ; ~/.conky/conky_start.sh" &
-bash -c "sleep 4 ; ~/.wmii/scripts/volume_status.py" &          # add the volume info on startup
+bash -c "sleep 4 ; ~/.wmii/scripts/volume_status.py" &          # add the volume info on startup; note doesn't work
+bash -c "sleep 4 ; xscreensaver -no-splash " &                  # start xscreensaver daemon so we can have autolocking screen
 
 # The new computer's caps indicator works, so no more need for this
 #bash -c "sleep 4 ; ~/.wmii/scripts/caps_status.py" &
 
+# Doesn't need to be run b/c of how wicd works:
+#  sets up the config after selecting network so that it'll automatically work w/ wicd running.
+#bash -c "sleep 4 ; wicd-client -n" &                           # internet
 
-bash -c "xmodmap ~/.Xmodmap"				# fix the Enter key on the keyboard
+bash -c "xmodmap ~/.Xmodmap"				# fix the Enter (and other) key on the keyboard
 
