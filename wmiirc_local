@@ -119,6 +119,7 @@ bash -c "sleep 4 ; ~/.wmii/scripts/set_background.sh" &         # desktop backgr
 bash -c "sleep 4 ; ~/.wmii/scripts/check_mail.sh" &             
 bash -c "sleep 4 ; ~/.conky/conky_start.sh" &
 bash -c "sleep 4 ; ~/.wmii/scripts/volume_status.py" &          # add the volume info on startup; note doesn't work
+bash -c "sleep 4 ; ~/.wmii/scripts/acpi_listen_parser.sh" &     # handles volume/music acpi special keys
 bash -c "sleep 4 ; xscreensaver -no-splash " &                  # start xscreensaver daemon so we can have autolocking screen
 
 # The new computer's caps indicator works, so no more need for this
