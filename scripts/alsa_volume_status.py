@@ -27,12 +27,7 @@ TODO: add logging?
 '''
 import subprocess
 
-MAX_ACHIEVABLE_VOL = 0x10000            # physical max
-MAX_VOL = MAX_ACHIEVABLE_VOL            # max that user cares about
 NUM_SEGMENTS = 12
-SEGMENT_WIDTH = 4000                    # set to desired segment width. None means that it is computed from MAX_VOL and NUM_SGEMENTS
-                                        # user would want to set to increment size from raise/lower_volume.sh
-
 
 #
 ## Exception defs
@@ -104,9 +99,6 @@ def get_mute(mute_line):
 
 def generate_output(vol_perc, is_mute):
     '''
-    If user has provided a custom SEGMENT_WIDTH, then it is used. Else it is
-    computed from other predefined information.
-
     @param Number vol volume level
     @param Bool is_mute True if output muted
     @return String the output to be printed
@@ -116,11 +108,6 @@ def generate_output(vol_perc, is_mute):
     if is_mute:
         return "Vol: muted"
     else:
-        if SEGMENT_WIDTH != None:
-            segment_width = SEGMENT_WIDTH
-        else:
-            segment_width = MAX_VOL / NUM_SEGMENTS
-
         num_on = min(int(vol_perc * NUM_SEGMENTS), NUM_SEGMENTS)
 
         return "Vol: [" + "-"*num_on + " "*(NUM_SEGMENTS-num_on) + "]"
