@@ -93,7 +93,7 @@ def printOutput(output):
     @author Matthew Todd
     '''
     try:
-        p = subprocess.Popen('echo "%s" | wmiir create /rbar/caps' % output, shell=True)
+        p = subprocess.Popen('echo "%s" | wmiir create /20-rbar/caps' % output, shell=True)
         p.wait()
     except (subprocess.CalledProcessError, OSError) as e:
         raise CustException('wmiir create ... failed', e)

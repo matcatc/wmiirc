@@ -20,15 +20,15 @@
 SLEEP_TIME=10s
 
 
-echo -n 'Mail: starting' | wmiir create /rbar/mail
+echo -n 'Mail: starting' | wmiir create /rbar/90-mail
 while :
 do
 
         if ps -A | grep 'claws-mail' > /dev/null
         then
-            echo -n 'Mail: ' $(claws-mail --status) | wmiir write rbar/mail
+            echo -n 'Mail: ' $(claws-mail --status) | wmiir write rbar/90-mail
         else
-            echo -n 'Mail: N/A' | wmiir write rbar/mail
+            echo -n 'Mail: N/A' | wmiir write rbar/90-mail
         fi
 
         sleep $SLEEP_TIME
