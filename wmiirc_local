@@ -46,16 +46,21 @@ local_events() {
 #	notify-send "modkey-o"
 #	eval wmiir setsid $WMII_TERM &
 #
-KeyGroup Sound
-Key XF86AudioRaiseVolume
-        ~/.wmii/scripts/raise_volume.sh
-        ~/.wmii/scripts/volume_status.py
-Key XF86AudioLowerVolume
-        ~/.wmii/scripts/lower_volume.sh
-        ~/.wmii/scripts/volume_status.py
-Key XF86AudioMute
-        ~/.wmii/scripts/mute_volume.sh
-        ~/.wmii/scripts/volume_status.py
+# Has been commented out b/c these keys don't relate to my current laptop's keyboard
+#KeyGroup Sound
+#Key XF86AudioRaiseVolume
+#        ~/.wmii/scripts/raise_volume.sh
+#        ~/.wmii/scripts/volume_status.py
+#Key XF86AudioLowerVolume
+#        ~/.wmii/scripts/lower_volume.sh
+#        ~/.wmii/scripts/volume_status.py
+#Key XF86AudioMute
+#        ~/.wmii/scripts/mute_volume.sh
+#        ~/.wmii/scripts/volume_status.py
+#
+KeyGroup Other
+Key Print
+        ~/.wmii/scripts/print_screen.sh
 
 KeyGroup Lock screen
 Key Mod4-L
@@ -75,7 +80,7 @@ KeyGroup Touchpad
 # think i for input
 Key $MODKEY-i
         PAD=`exec ~/bin/touchpad.py toggle &`
-        echo -n "pad: ${PAD}" | wmiir create rbar/touchpad
+        echo -n "pad: ${PAD}" | wmiir create rbar/50-touchpad
 
 # following 3 commands require that the current user can run them w/o passwords (via /etc/sudoers) to work correctly.
 Action halt
