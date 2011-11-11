@@ -21,17 +21,17 @@ do
     case $command in
         "MUTE")
             echo "muting"
-            mute_volume.sh > /dev/null
+            ~/bin/mute_volume.sh > /dev/null
             ~/.wmii/scripts/alsa_volume_status.py
             ;;
         "VOLDN")
             echo "vol down"
-            lower_volume.sh > /dev/null
+            ~/bin/lower_volume.sh > /dev/null
             ~/.wmii/scripts/alsa_volume_status.py
             ;;
         "VOLUP")
             echo "vol up"
-            raise_volume.sh > /dev/null
+            ~/bin/raise_volume.sh > /dev/null
             ~/.wmii/scripts/alsa_volume_status.py
             ;;
         "CDPLAY")
