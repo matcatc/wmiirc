@@ -3,6 +3,10 @@
 #
 # b/c acpi_fakekey and related wasn't working for me.
 # Plus, this is simpler.
+#
+# Note: b/c this is run daemonically, the keys will work while the screen is
+# locked. I actually like this originally unintended behavior, so I left it as
+# is.
 
 DEBUG=0
 
