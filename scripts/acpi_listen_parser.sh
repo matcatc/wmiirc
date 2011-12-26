@@ -10,6 +10,13 @@
 
 DEBUG=0
 
+# allows us to switch volume status scripts in one location
+volume_status()
+{
+    ~/.wmii/scripts/pulse_system_volume_status.py
+}
+
+
 
 acpi_listen |
 while read description command id1 id2
@@ -26,17 +33,17 @@ do
         "MUTE")
             echo "muting"
             ~/bin/mute_volume.sh > /dev/null
-            ~/.wmii/scripts/alsa_volume_status.py
+            volume_status
             ;;
         "VOLDN")
             echo "vol down"
             ~/bin/lower_volume.sh > /dev/null
-            ~/.wmii/scripts/alsa_volume_status.py
+            volume_status
             ;;
         "VOLUP")
             echo "vol up"
             ~/bin/raise_volume.sh > /dev/null
-            ~/.wmii/scripts/alsa_volume_status.py
+            volume_status
             ;;
         "CDPLAY")
             echo "play/pause"
