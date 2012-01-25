@@ -114,7 +114,7 @@ wmiir write /tagrules <<!
 /SpiderOak.*/   -> backup
 /claws-mail.*/  -> mail
 /gnucash.*/	    -> finance
-/Pidgin.*/      -> ~+im
+/Pidgin.*/      -> im
 /PipeWalker/    -> ~
 !
 
@@ -135,6 +135,7 @@ bash -c "sleep 4 ; ~/.conky/conky_start.sh" &
 bash -c "sleep 4 ; ~/.wmii/scripts/pulse_system_volume_status.py" &          # add the volume info on startup; note doesn't work
 bash -c "sleep 4 ; ~/.wmii/scripts/acpi_listen_parser.sh" &     # handles volume/music acpi special keys
 bash -c "sleep 4 ; xscreensaver -no-splash " &                  # start xscreensaver daemon so we can have autolocking screen
+bash -c "sleep 4 ; ~/.wmii/scripts/battery.sh" &                # battery notification daemon
 
 # The new computer's caps indicator works, so no more need for this
 #bash -c "sleep 4 ; ~/.wmii/scripts/caps_status.py" &
