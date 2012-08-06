@@ -116,6 +116,7 @@ wmiir write /tagrules <<!
 /gnucash.*/	    -> finance
 /Pidgin.*/      -> im
 /PipeWalker/    -> ~
+/xfce4-notifyd/ -> sel+notification
 !
 
 
