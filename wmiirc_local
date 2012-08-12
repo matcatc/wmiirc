@@ -117,6 +117,7 @@ wmiir write /tagrules <<!
 /Pidgin.*/      -> im
 /PipeWalker/    -> ~
 /xfce4-notifyd/ -> sel+notification
+/trayer.*/      -> tray
 !
 
 
