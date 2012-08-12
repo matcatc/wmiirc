@@ -109,8 +109,8 @@ wmiir write /colrules <<!
 wmiir write /tagrules <<!
 /MPlayer|VLC/   -> ~
 /Wicd*/         -> wireless
-/Firefox/       -> sel+browser
-/Iceweasel/     -> sel+browser
+/Firefox/       -> sel
+/Iceweasel/     -> sel
 /SpiderOak.*/   -> backup
 /claws-mail.*/  -> mail
 /gnucash.*/	    -> finance
