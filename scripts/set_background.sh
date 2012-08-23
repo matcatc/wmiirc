@@ -18,4 +18,4 @@
 
 # requires that the user change the path to a valid image on his/her system
 
-feh --bg-fill ~/wallpaper.png
+feh --bg-fill ~/.wallpaper.png
