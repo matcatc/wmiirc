@@ -14,11 +14,14 @@
 #
 # Matthew Todd
 
+status=1
+
 # use gnome-screensaver if running
 if [ $(pidof 'gnome-screensaver') ]
 then
     echo 'gnome-screensaver-command --lock'
     gnome-screensaver-command --lock
+    status=$?
 
 # use xscreensaver otherwise
 else
@@ -31,5 +34,13 @@ else
 
     echo 'xscreensaver-command -lock'
     xscreensaver-command -lock
+    status=$?
+fi
+
+
+# switch to a nother tag
+if [ $status -eq 0 ]
+then
+    wmiir xwrite /ctl view lock
 fi
 
