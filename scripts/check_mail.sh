@@ -23,12 +23,18 @@ SLEEP_TIME=10s
 echo -n 'Mail: starting' | wmiir create /rbar/90-mail
 while :
 do
+        status=$(claws-mail --status)
 
-        if ps -A | grep 'claws-mail' > /dev/null
+        # the below comparison is what claws-mail prints out when its not
+        # running. Using this rather than grepping ps output b/c that'll fail
+        # if it catches a previous grep. Ie: this script was previously
+        # interfering with itself when the `claws-mail --status` process was
+        # found. Plus this does one less subprocess call.
+        if [ "$status" == '0 Claws Mail not running.' ]
         then
-            echo -n 'Mail: ' $(claws-mail --status) | wmiir write rbar/90-mail
-        else
             echo -n 'Mail: N/A' | wmiir write rbar/90-mail
+        else
+            echo -n "Mail: $status" | wmiir write rbar/90-mail
         fi
 
         sleep $SLEEP_TIME
