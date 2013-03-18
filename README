@@ -1,3 +1,9 @@
+README
+======
+
+Introduction
+------------
+
 This project is simply my configuration for wmii.
 
 The project consists of wmiirc_local, the editing of the wmii config, and a
@@ -8,6 +14,16 @@ salt.
 The biggest problem I had with getting started with wmii was the lack of good
 documentation and examples. Hopefully by making this available, it'll be a
 little easier for others to get started with wmii.
+
+
+Status
+------
+
+Given that wmii appears to have been abandoned/discontinued/what-have-you, I'm
+switching window managers. Meaning that I won't be updating this anymore.
+
+For those that are curious, I'm moving to xmonad (for the moment.)
+
 
 Requirements
 ------------
